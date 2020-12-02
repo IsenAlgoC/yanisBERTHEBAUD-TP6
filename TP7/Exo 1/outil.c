@@ -24,7 +24,6 @@ int ajouter_un_contact_dans_rep(Repertoire *rep, Enregistrement enr)
 {
 #ifdef IMPL_TAB
 	// compléter code ici pour tableau
-	int idx;
 	if (rep->nb_elts < MAX_ENREG)
 	{
 		rep->tab[rep->nb_elts] = enr;    //si la condition est bien vérifiée, on ajoute le contact à la fin du tableau
@@ -127,9 +126,14 @@ void affichage_enreg(Enregistrement enr)
   /**********************************************************************/
 void affichage_enreg_frmt(Enregistrement enr)
 {
-	// code à compléter ici
-	// comme fonction affichage_enreg, mais avec présentation alignées des infos
-	
+	printf("| %s", enr.nom);
+	for (int i = strlen(enr.nom); i < MAX_NOM; i++)
+		printf(" ");
+	printf("| %s", enr.prenom);
+	for (int i = strlen(enr.prenom); i < MAX_NOM; i++)
+		printf(" ");
+	printf("| %s", enr.tel);
+	printf("\n");
 
 } /* fin affichage_enreg */
 
@@ -162,7 +166,7 @@ void trier(Repertoire *rep)
 
 #ifdef IMPL_TAB
 	// ajouter code ici pour tableau
-	int k; //variable pour stocker l'indice du contact qu'on va échanger
+	int k = 0; //variable pour stocker l'indice du contact qu'on va échanger
 	Enregistrement tmp;  //contact temporaire pour stocker la valeur qu'on remplace
 	Enregistrement min;  // contact pour comparer
 	for (int i = 0; i < rep->nb_elts-1; i++) {  //on parcour tout le tableau sauf le dernier contact car il sera trié automatiquement
@@ -213,7 +217,7 @@ int rechercher_nom(Repertoire *rep, char nom[], int ind)
 
 #ifdef IMPL_TAB
 							// ajouter code ici pour tableau
-	ind_fin = rep->nb_elts-1;
+	ind_fin = rep->nb_elts - 1;
 	strcpy_s(tmp_nom, _countof(tmp_nom), nom);    //on copie nom dans tmp_nom, et on le passe en majuscule
 	_strupr_s(tmp_nom, _countof(tmp_nom));
 	while (trouve == false) {  //on va comparer a chaque nom du répertoire 
@@ -242,10 +246,21 @@ int rechercher_nom(Repertoire *rep, char nom[], int ind)
   /*********************************************************************/
   /* Supprimer tous les caracteres non numériques de la chaines        */
   /*********************************************************************/
-void compact(char *s)
+void compact(char* s)
 {
-	// compléter code ici
-	
+	int j = 0;
+	int taille = strlen(s);
+	for (int i = 0; i < taille; i++) {
+
+		if (isalnum(s[i])) {}
+		else {
+			j = i;
+			while (s[j + 1] != '\0') {
+				*(s + j) = *(s + j + 1);
+				j++;
+			}
+		}
+	}
 	return;
 }
 
@@ -254,11 +269,23 @@ void compact(char *s)
 /* argument                                                           */
 /* retourne OK si la sauvegarde a fonctionné ou ERROR sinon           */
 /**********************************************************************/
-int sauvegarder(Repertoire *rep, char nom_fichier[])
+int sauvegarder(Repertoire* rep, char nom_fichier[])
 {
-	FILE *fic_rep;					/* le fichier */
+	errno_t err;
+	FILE* fic_rep;                    /* le fichier */
 #ifdef IMPL_TAB
-	// ajouter code ici pour tableau
+	err = fopen_s(&fic_rep, *nom_fichier, "w");
+	for (int i = 0; i < rep->nb_elts; i++) {
+		fputs(rep->tab[i].nom, fic_rep);
+		fputs(",", fic_rep);
+		fputs(rep->tab[i].prenom, fic_rep);
+		fputs(",", fic_rep);
+		fputs(rep->tab[i].tel, fic_rep);
+
+	}
+	if (feof(fic_rep)) {
+		fclose(fic_rep);
+	}
 	
 #else
 #ifdef IMPL_LIST
