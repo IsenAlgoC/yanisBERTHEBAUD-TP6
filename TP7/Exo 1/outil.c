@@ -51,7 +51,7 @@ int ajouter_un_contact_dans_rep(Repertoire *rep, Enregistrement enr)
 	}
 	else {
 		if (InsertElementAt(rep->liste, rep->liste->size, enr) != 0) {
-			rep->nb_elts++;
+			rep->nb_elts++;     //on ajoute l'élement en queue
 			modif = true;
 			rep->est_trie = false;
 			return(OK);

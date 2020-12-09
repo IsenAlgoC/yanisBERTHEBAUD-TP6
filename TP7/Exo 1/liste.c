@@ -79,10 +79,11 @@ int InsertElementAt(LinkedList* Liste, int i, Enregistrement pers) {
 		if (Liste->size == 0) { // insertion en tête de l'unique élément
 			NewElement = NewLinkedListElement(pers);
 			if (NewElement != NULL) {
-				Liste->head = NewElement;
+				Liste->head = NewElement;    //on rajoute un élément en tete
 				Liste->tail = NewElement;
 				Liste->size = 1;
 				Liste->head->next = NULL;
+				return 1;
 			}
 			else return 0;
 		}
