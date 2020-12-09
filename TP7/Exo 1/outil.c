@@ -117,7 +117,19 @@ void supprimer_un_contact_dans_rep(Repertoire *rep, int indice) {
 void affichage_enreg(Enregistrement enr)
 {
 	// code à compléter ici
-	printf("\n%s, %s                 %s\n", enr.nom, enr.prenom, enr.tel);
+	printf("\n|");
+	printf("%s", enr.nom);
+	for (int i = strlen(enr.nom); i < MAX_NOM; i++) {
+		printf(" ");
+	}
+	printf("|");
+	printf("%s", enr.prenom);
+	for (int i = strlen(enr.prenom); i < MAX_NOM; i++) {       //pour aligner tous les nom et prénom on complète avec des espaces jusque max nom
+		printf(" ");
+	}
+	printf("|");
+	printf("%s\n", enr.tel);
+	return;
 	return;
 
 } /* fin affichage_enreg */
@@ -128,7 +140,18 @@ void affichage_enreg(Enregistrement enr)
   /**********************************************************************/
 void affichage_enreg_frmt(Enregistrement enr)
 {
-	printf("\n%s, %s                 %s\n", enr.nom, enr.prenom, enr.tel);
+	printf("\n|");
+	printf("%s", enr.nom);
+	for (int i = strlen(enr.nom); i < MAX_NOM; i++) {       //pour aligner tous les nom et prénom on complète avec des espaces jusque max nom
+		printf(" ");
+	}
+	printf("|");
+	printf("%s", enr.prenom);
+	for (int i = strlen(enr.prenom); i < MAX_NOM; i++) {
+		printf(" ");
+	}
+	printf("|");
+	printf("%s\n", enr.tel);
 	return;
 } /* fin affichage_enreg */
 
